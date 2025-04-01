@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>:3 sorry bebi</title>
+    <style>
+        :root {
+            /* ===== EDIT THESE VARIABLES TO CUSTOMIZE IMAGES ===== */
+            --kuromi-sprite: url('https://i.imgur.com/00lvnNT.png);
+            --girlfriend-sprite: url('https://i.imgur.com/xJKN96Z.png');
+            --gerome-sprite: url('https://i.imgur.com/6QmTK9r.png');
+            
+            --classroom-bg: url('https://i.imgur.com/XkH0X83.jpg');
+            --projector-room-bg: url('/https://i.imgur.com/MsTSy5T.jpeg');
+            --ending-bg: url('https://i.imgur.com/XkH0X83.jpg');
+            
+            --proj-chemistry: url('https://imgur.com/Wpy7ZdR.jpeg');
+            --proj-break: url('https://i.imgur.com/j0QzkI8.jpeg');
+            --proj-games: url('https://i.imgur.com/rcxDDHk.jpg');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffe6f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .visual-novel {
+            width: 100%;
+            max-width: 960px;
+            height: 540px; /* 16:9 aspect ratio for landscape phones */
+            background-color: #ffcce6;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .scene {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .background {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        #bg-classroom {
+            background-image: var(--classroom-bg);
+        }
+        
+        #bg-projector-room {
+            background-image: var(--projector-room-bg);
+        }
+        
+        #bg-ending {
+            background-image: var(--ending-bg);
+        }
+        
+        .projector-screen {
+            width: 480px;
+            height: 270px;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 10px solid #333;
+            display: none;
+        }
+        
+        #proj-chemistry {
+            background-image: var(--proj-chemistry);
+            width: 100%;
+            height: 100%;
+        }
+        
+        #proj-break {
+            background-image: var(--proj-break);
+            width: 100%;
+            height: 100%;
+        }
+        
+        #proj-games {
+            background-image: var(--proj-games);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .character {
+            position: absolute;
+            width: 200px;
+            height: 350px;
+            bottom: 120px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: bottom;
+        }
+        
+        #kuromi {
+            background-image: var(--kuromi-sprite);
+            left: 80px;
+        }
+        
+        #girlfriend {
+            background-image: var(--girlfriend-sprite);
+            right: 80px;
+        }
+        
+        #gerome {
+            background-image: var(--gerome-sprite);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dialog-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+            position: relative;
+            margin-top: auto;
+            min-height: 100px;
+        }
+        
+        .speaker {
+            font-weight: bold;
+            color: #ff66b2;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .dialog-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+            min-height: 50px;
+        }
+        
+        .continue-button {
+            background-color: #ff99cc;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            align-self: center;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        
+        .continue-button:hover, .continue-button:active {
+            background-color: #ff66b2;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .visual-novel {
+                border-radius: 0;
+                height: 100vh;
+                width: 100vw;
+                max-width: none;
+            }
+            
+            .character {
+                width: 150px;
+                height: 300px;
+            }
+            
+            #kuromi {
+                left: 30px;
+            }
+            
+            #girlfriend {
+                right: 30px;
+            }
+            
+            .projector-screen {
+                width: 90%;
+                height: 230px;
+            }
+            
+            .dialog-box {
+                padding: 10px;
+            }
+            
+            .speaker {
+                font-size: 16px;
+            }
+            
+            .dialog-text {
+                font-size: 14px;
+            }
+        }
+        
+        /* Text animation styles */
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .typing-animation {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typewriter 1.5s steps(40, end);
+        }
+    </style>
+</head>
+<body>
+    <div class="visual-novel">
+        <div class="scene">
+            <!-- Background placeholders -->
+            <div id="bg-classroom" class="background"></div>
+            <div id="bg-projector-room" class="background hidden"></div>
+            <div id="bg-ending" class="background hidden"></div>
+            
+            <!-- Projector screen placeholders -->
+            <div id="projector-screen" class="projector-screen">
+                <div id="proj-chemistry" class="hidden"></div>
+                <div id="proj-break" class="hidden"></div>
+                <div id="proj-games" class="hidden"></div>
+            </div>
+            
+            <!-- Character sprites -->
+            <div id="kuromi" class="character hidden"></div>
+            <div id="girlfriend" class="character hidden"></div>
+            <div id="gerome" class="character hidden"></div>
+            
+            <!-- Dialog box -->
+            <div class="dialog-box">
+                <div id="speaker" class="speaker">Kuromi</div>
+                <div id="dialog" class="dialog-text">
+                    <span id="dialog-text" class="typing-animation">Hey!</span>
+                </div>
+            </div>
+        </div>
+        <button id="continueBtn" class="continue-button">Continue</button>
+    </div>
+
+    <script>
+        const dialogues = [
+            // Scene 1: Classroom Introduction
+            { speaker: "Kuromi", text: "Hey!", bg: "classroom", characters: ["kuromi"] },
+            { speaker: "Kuromi", text: "It's been a while.", bg: "classroom", characters: ["kuromi"] },
+            { speaker: "Kuromi", text: "I'm teacher Kuromi, and today's lesson is explaining the sin of Gerome.", bg: "classroom", characters: ["kuromi", "girlfriend"] },
+            { speaker: "Kuromi", text: "Despite his sin of not messaging you when you were sleeping, he still loves you more than ever.", bg: "classroom", characters: ["kuromi", "girlfriend"] },
+            { speaker: "Kuromi", text: "So let's go!", bg: "classroom", characters: ["kuromi", "girlfriend"] },
+            
+            // Scene 2: Projector Scenes
+            { speaker: "Kuromi", text: "So when you were sleeping, Gerome was already so intrigued in learning general chemistry.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "chemistry" },
+            { speaker: "Kuromi", text: "I bet, He's sorry for not messaging you.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "chemistry" },
+            
+            { speaker: "Kuromi", text: "He then took a break.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "break" },
+            { speaker: "Kuromi", text: "He wanted to rest cause he missed you, so he messaged you just to check if you're online.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "break" },
+            { speaker: "Kuromi", text: "He waited for a few minutes and realized you are probably sleeping.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "break" },
+            { speaker: "Kuromi", text: "He decided to wait for you and continue his studies.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "break" },
+            
+            { speaker: "Kuromi", text: "He got distracted and played a game.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "games" },
+            { speaker: "Kuromi", text: "How silly of him for not talking to you instead.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"], projector: "games" },
+            
+            { speaker: "Kuromi", text: "He then decides to scroll onto your social media account waiting for you to get up.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"] },
+            { speaker: "Kuromi", text: "However what he doesn't realize is that, He didn't show enough affection unlike before.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"] },
+            { speaker: "Kuromi", text: "He however regrets his decision, and still loves you so much.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"] },
+            { speaker: "Kuromi", text: "Look he's even here to apologize.", 
+              bg: "projector-room", characters: ["kuromi", "girlfriend"] },
+            
+            // Scene 3: Ending with Gerome
+            { speaker: "Gerome", text: "Hi baby, I know I'm using Kuromi for us to make bati.", 
+              bg: "ending", characters: ["gerome", "girlfriend"] },
+            { speaker: "Gerome", text: "I'm sorry you felt that way, I'm still inlove with you.", 
+              bg: "ending", characters: ["gerome", "girlfriend"] },
+            { speaker: "Gerome", text: "I'm really sorry my baby, I ask for your blissful forgiveness.", 
+              bg: "ending", characters: ["gerome", "girlfriend"] },
+            { speaker: "Gerome", text: "I love you today and forever baby I promiseee, I'm sorry.", 
+              bg: "ending", characters: ["gerome", "girlfriend"] }
+        ];
+        
+        let currentDialogue = 0;
+        const speakerElement = document.getElementById("speaker");
+        const dialogTextElement = document.getElementById("dialog-text");
+        const continueBtn = document.getElementById("continueBtn");
+        const backgrounds = {
+            classroom: document.getElementById("bg-classroom"),
+            "projector-room": document.getElementById("bg-projector-room"),
+            ending: document.getElementById("bg-ending")
+        };
+        const characters = {
+            kuromi: document.getElementById("kuromi"),
+            girlfriend: document.getElementById("girlfriend"),
+            gerome: document.getElementById("gerome")
+        };
+        const projectorScreen = document.getElementById("projector-screen");
+        const projectorSlides = {
+            chemistry: document.getElementById("proj-chemistry"),
+            break: document.getElementById("proj-break"),
+            games: document.getElementById("proj-games")
+        };
+        
+        // Enable the continue button
+        let canContinue = true;
+        
+        continueBtn.addEventListener("click", () => {
+            if (!canContinue) return;
+            
+            currentDialogue++;
+            
+            if (currentDialogue >= dialogues.length) {
+                // Reset to beginning if at the end
+                currentDialogue = 0;
+            }
+            
+            updateScene();
+        });
+        
+        function updateScene() {
+            const dialogue = dialogues[currentDialogue];
+            
+            // Disable continue button during animation
+            canContinue = false;
+            
+            // Update speaker
+            speakerElement.textContent = dialogue.speaker;
+            
+            // Update text with animation
+            dialogTextElement.classList.remove("typing-animation");
+            dialogTextElement.textContent = "";
+            
+            // Trigger reflow to restart animation
+            void dialogTextElement.offsetWidth;
+            
+            dialogTextElement.textContent = dialogue.text;
+            dialogTextElement.classList.add("typing-animation");
+            
+            // Re-enable continue button after animation completes
+            setTimeout(() => {
+                canContinue = true;
+            }, 1500); // Match with animation duration
+            
+            // Change background
+            for (const bg in backgrounds) {
+                backgrounds[bg].classList.add("hidden");
+            }
+            backgrounds[dialogue.bg].classList.remove("hidden");
+            
+            // Show/hide characters
+            for (const character in characters) {
+                characters[character].classList.add("hidden");
+            }
+            dialogue.characters.forEach(character => {
+                characters[character].classList.remove("hidden");
+            });
+            
+            // Handle projector
+            if (dialogue.projector) {
+                projectorScreen.style.display = "block";
+                
+                // Hide all slides
+                for (const slide in projectorSlides) {
+                    projectorSlides[slide].classList.add("hidden");
+                }
+                
+                // Show specific slide
+                projectorSlides[dialogue.projector].classList.remove("hidden");
+            } else {
+                projectorScreen.style.display = "none";
+            }
+        }
+        
+        // Initialize scene
+        updateScene();
+        
+        // Handle mobile orientation
+        window.addEventListener('resize', function() {
+            if (window.innerHeight > window.innerWidth) {
+                alert("Please rotate your device to landscape mode for the best experience!");
+            }
+        });
+        
+        // Check orientation on load
+        if (window.innerHeight > window.innerWidth) {
+            alert("Please rotate your device to landscape mode for the best experience!");
+        }
+    </script>
+</body>
+</html>
